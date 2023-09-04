@@ -7,6 +7,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // Import CORS
 const cors = require('cors');
+// Connect Database
+require("./Database/db");
 
 // Create App
 const app = express();
@@ -20,6 +22,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use CORS
 app.use(cors());
+
+// Import User Router
+app.use("/api/users",require("./Controller/userController"));
+// Import Worker Router
+app.use("/api/workers",require("./Controller/workerController"));
+// Import Admin Router
+app.use("/api/admin",require("./Controller/adminController"));
 
 app.all("*", (req, res) => {
     res.status(404).send("`~` Page Not Found `~`");
